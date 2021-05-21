@@ -1,4 +1,4 @@
-#include "Main_Menu.h"
+#include "stdafx.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -7,6 +7,6 @@ using namespace System::Windows::Forms;
 void main(array<String^>^ args) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	JobStatus::Main_Menu form;
-	Application::Run(% form);
+	JobStatus::Main_Menu mainForm;
+	Application::Run(% mainForm);
 }

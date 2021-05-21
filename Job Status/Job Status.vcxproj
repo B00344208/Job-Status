@@ -120,14 +120,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Add_Job_Info.cpp" />
     <ClCompile Include="Main_Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Add_Job_Info.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Main_Menu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Add_Job_Info.resx">
+      <DependentUpon>Add_Job_Info.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main_Menu.resx">
       <DependentUpon>Main_Menu.h</DependentUpon>
     </EmbeddedResource>
