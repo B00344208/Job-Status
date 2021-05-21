@@ -1,6 +1,1 @@
-﻿  Add_Job_Info.cpp
-  Main_Menu.cpp
-G:\University\OneDrive\OneDrive - University of the West of Scotland\3rd year\1st - 2nd trimester\Algorithms and Collections\Coursework 2\Job Status\Job Status\Main_Menu.cpp(7,33): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
-  Generating Code...
-  Add_Job_Info.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Job Status.vcxproj -> G:\University\OneDrive\OneDrive - University of the West of Scotland\3rd year\1st - 2nd trimester\Algorithms and Collections\Coursework 2\Job Status\x64\Debug\Job Status.exe
+﻿

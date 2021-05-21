@@ -1,4 +1,0 @@
-G:\University\OneDrive\OneDrive - University of the West of Scotland\3rd year\1st - 2nd trimester\Algorithms and Collections\Coursework 2\Job Status\Job Status\x64\Debug\JobStatus.Main_Menu.resources
-G:\University\OneDrive\OneDrive - University of the West of Scotland\3rd year\1st - 2nd trimester\Algorithms and Collections\Coursework 2\Job Status\Job Status\x64\Debug\Job Status.vcxproj.GenerateResource.cache
-G:\University\OneDrive\OneDrive - University of the West of Scotland\3rd year\1st - 2nd trimester\Algorithms and Collections\Coursework 2\Job Status\Job Status\x64\Debug\Job Status.vcxprojAssemblyReference.cache
-G:\University\OneDrive\OneDrive - University of the West of Scotland\3rd year\1st - 2nd trimester\Algorithms and Collections\Coursework 2\Job Status\Job Status\x64\Debug\JobStatus.Add_Job_Info.resources
