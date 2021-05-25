@@ -20,23 +20,7 @@ namespace JobStatus
     class Lists
     {
     public:
-        static list<service_Order> service_Order_List;
+        list<service_Order> service_Order_List;
 
     };
-
-    class Time
-    {
-    public:
-        int setTime();
-        time_t rawtime;
-        struct tm* timeinfo;
-
-    };
-
-    int Time::setTime()
-    {
-        time(&rawtime);
-        timeinfo = localtime(&rawtime);
-        return 0;
-    }
 }

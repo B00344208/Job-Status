@@ -1,9 +1,8 @@
 #pragma once
 #include "Lists.h"
+#include "Time.h"
 #include <string>
 #include <iostream>
-#include <cstdio>
-#include <ctime>
 #include <msclr\marshal_cppstd.h>
 
 namespace JobStatus {
@@ -183,21 +182,19 @@ namespace JobStatus {
 		}
 
 		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e)
-		{			
+		{
+			Lists service_order_lists;
 			Time t;
 			t.setTime();
 			msclr::interop::marshal_context context;
 			String^ timestamp = (t.timeinfo->tm_hour + ":" + t.timeinfo->tm_min);
 			timeStamp = context.marshal_as<string>(timestamp);
 
-			service_Order* newSO = new service_Order();
-			newSO->serviceOrder_Number = serviceOrderNumber;
-			newSO->serviceOrder_Status = serviceOrderStatus;
-			newSO->time_Stamp = timeStamp;
-
-			//Lists::service_Order_List.insert(newSO);
+			service_Order newSO;
+			newSO.serviceOrder_Number = serviceOrderNumber;
+			newSO.serviceOrder_Status = serviceOrderStatus;
+			newSO.time_Stamp = timeStamp;
+			service_order_lists.service_Order_List.push_back(newSO);
 		}		
-	};
-
-	
+	};	
 }

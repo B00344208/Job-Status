@@ -135,6 +135,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Add_Job_Info.resx">
