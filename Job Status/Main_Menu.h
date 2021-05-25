@@ -193,6 +193,7 @@ namespace JobStatus {
 			this->Hide();
 			JobStatus::Add_Job_Info addJobForm;
 			addJobForm.ShowDialog();
+			this->Show();
 		}
 
 		private: System::Void Display_All_Jobs_Click(System::Object^ sender, System::EventArgs^ e)

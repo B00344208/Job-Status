@@ -1,4 +1,10 @@
 #pragma once
+#include "Lists.h"
+#include <string>
+#include <iostream>
+#include <cstdio>
+#include <ctime>
+#include <msclr\marshal_cppstd.h>
 
 namespace JobStatus {
 
@@ -8,10 +14,17 @@ namespace JobStatus {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Threading::Tasks;
+	using namespace std;
+
+	string serviceOrderNumber;
+	string serviceOrderStatus;
+	string timeStamp;
 
 	/// <summary>
 	/// Summary for Add_Job_Info
 	/// </summary>
+
 	public ref class Add_Job_Info : public System::Windows::Forms::Form
 	{
 	public:
@@ -22,6 +35,7 @@ namespace JobStatus {
 			//TODO: Add the constructor code here
 			//
 		}
+	public:
 
 	protected:
 		/// <summary>
@@ -34,13 +48,17 @@ namespace JobStatus {
 				delete components;
 			}
 		}
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
 	private: System::Windows::Forms::TextBox^ BackGround;
 	private: System::Windows::Forms::ComboBox^ Job_Status;
 
 	private: System::Windows::Forms::TextBox^ Service_Order_Number;
 	private: System::Windows::Forms::TextBox^ SO;
 
-	public: String^ serviceOrder;
+	private: System::Windows::Forms::Button^ Add_Job;
+	public:
 
 	protected:
 
@@ -61,6 +79,7 @@ namespace JobStatus {
 			this->Job_Status = (gcnew System::Windows::Forms::ComboBox());
 			this->Service_Order_Number = (gcnew System::Windows::Forms::TextBox());
 			this->SO = (gcnew System::Windows::Forms::TextBox());
+			this->Add_Job = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// BackGround
@@ -71,20 +90,22 @@ namespace JobStatus {
 			this->BackGround->Location = System::Drawing::Point(0, 0);
 			this->BackGround->Multiline = true;
 			this->BackGround->Name = L"BackGround";
-			this->BackGround->Size = System::Drawing::Size(1349, 731);
+			this->BackGround->Size = System::Drawing::Size(526, 226);
 			this->BackGround->TabIndex = 1;
 			// 
 			// Job_Status
 			// 
+			this->Job_Status->Cursor = System::Windows::Forms::Cursors::Default;
 			this->Job_Status->FormattingEnabled = true;
 			this->Job_Status->Items->AddRange(gcnew cli::array< System::Object^  >(8) {
-				L"Complete, GD Done", L"Complete", L"Priority Order",
-					L"Pending for Samsung", L"Engineer Report", L"GD Done", L"Re-write Done"
+				L"Complete, GD Done", L"Complete", L"Priority Order", L"Pending for Samsung",
+					L"Engineer Report", L"GD Done", L"Re-write Done", L"£24.99"
 			});
 			this->Job_Status->Location = System::Drawing::Point(335, 48);
 			this->Job_Status->Name = L"Job_Status";
 			this->Job_Status->Size = System::Drawing::Size(129, 21);
 			this->Job_Status->TabIndex = 2;
+			this->Job_Status->SelectedIndexChanged += gcnew System::EventHandler(this, &Add_Job_Info::Job_Status_SelectedIndexChanged);
 			// 
 			// Service_Order_Number
 			// 
@@ -112,11 +133,25 @@ namespace JobStatus {
 			this->SO->Text = L"Service Order Number:";
 			this->SO->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
+			// Add_Job
+			// 
+			this->Add_Job->Cursor = System::Windows::Forms::Cursors::Default;
+			this->Add_Job->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Add_Job->Location = System::Drawing::Point(37, 92);
+			this->Add_Job->Name = L"Add_Job";
+			this->Add_Job->Size = System::Drawing::Size(427, 74);
+			this->Add_Job->TabIndex = 5;
+			this->Add_Job->Text = L"Add Job";
+			this->Add_Job->UseVisualStyleBackColor = true;
+			this->Add_Job->Click += gcnew System::EventHandler(this, &Add_Job_Info::Add_Job_Click);
+			// 
 			// Add_Job_Info
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1350, 729);
+			this->ClientSize = System::Drawing::Size(507, 201);
+			this->Controls->Add(this->Add_Job);
 			this->Controls->Add(this->SO);
 			this->Controls->Add(this->Service_Order_Number);
 			this->Controls->Add(this->Job_Status);
@@ -133,9 +168,53 @@ namespace JobStatus {
 			if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08)
 			e->Handled = true;
 		}
+
 		private: System::Void Service_Order_Number_TextChanged(System::Object^ sender, System::EventArgs^ e)
 		{
-			serviceOrder = Service_Order_Number->Text;
+			msclr::interop::marshal_context context;
+			String^ service_order_number = Service_Order_Number->Text;
+			serviceOrderNumber = context.marshal_as<string>(service_order_number);
 		}
+
+		private: System::Void Job_Status_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+		{
+			msclr::interop::marshal_context context;
+			String^ service_order_status = Job_Status->Text;
+			serviceOrderStatus = context.marshal_as<string>(service_order_status);
+		}
+
+		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+			msclr::interop::marshal_context context;
+			Time t;
+			t.setTime();
+
+			String^ timestamp = (t.timeinfo->tm_hour + ":" + t.timeinfo->tm_min);
+			timeStamp = context.marshal_as<string>(timestamp);
+
+			service_Order* newSO = new service_Order();
+			newSO->serviceOrder_Number = serviceOrderNumber;
+			newSO->serviceOrder_Status = serviceOrderStatus;
+			newSO->time_Stamp = timeStamp;
+
+			Lists::service_Order_List.insert(newSO);
+		}		
 	};
+
+	class Time
+	{
+	public:
+		int setTime();
+		time_t rawtime;
+		struct tm* timeinfo;
+
+	};
+
+
+	int Time::setTime()
+	{
+		time(&rawtime);
+		timeinfo = localtime(&rawtime);
+		return 0;
+	}
 }
