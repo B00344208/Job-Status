@@ -35,7 +35,6 @@ namespace JobStatus {
 			//TODO: Add the constructor code here
 			//
 		}
-	public:
 
 	protected:
 		/// <summary>
@@ -184,11 +183,10 @@ namespace JobStatus {
 		}
 
 		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e)
-		{
-			msclr::interop::marshal_context context;
+		{			
 			Time t;
 			t.setTime();
-
+			msclr::interop::marshal_context context;
 			String^ timestamp = (t.timeinfo->tm_hour + ":" + t.timeinfo->tm_min);
 			timeStamp = context.marshal_as<string>(timestamp);
 
@@ -197,24 +195,9 @@ namespace JobStatus {
 			newSO->serviceOrder_Status = serviceOrderStatus;
 			newSO->time_Stamp = timeStamp;
 
-			Lists::service_Order_List.insert(newSO);
+			//Lists::service_Order_List.insert(newSO);
 		}		
 	};
 
-	class Time
-	{
-	public:
-		int setTime();
-		time_t rawtime;
-		struct tm* timeinfo;
-
-	};
-
-
-	int Time::setTime()
-	{
-		time(&rawtime);
-		timeinfo = localtime(&rawtime);
-		return 0;
-	}
+	
 }
