@@ -9,14 +9,13 @@ namespace JobStatus
     public:
         int setTime();
         time_t rawtime;
-        struct tm* timeinfo;
-
+        struct tm timeinfo;
     };
 
     int Time::setTime()
     {
         time(&rawtime);
-        timeinfo = localtime(&rawtime);
+        localtime_s(&timeinfo, &rawtime);
         return 0;
     }
 

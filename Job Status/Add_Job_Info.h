@@ -187,7 +187,7 @@ namespace JobStatus {
 			Time t;
 			t.setTime();
 			msclr::interop::marshal_context context;
-			String^ timestamp = (t.timeinfo->tm_hour + ":" + t.timeinfo->tm_min);
+			String^ timestamp = (t.timeinfo.tm_hour + ":" + t.timeinfo.tm_min);
 			timeStamp = context.marshal_as<string>(timestamp);
 
 			service_Order newSO;

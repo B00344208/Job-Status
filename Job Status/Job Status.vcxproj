@@ -152,6 +152,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Add_Job_Info.resx">
       <DependentUpon>Add_Job_Info.h</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Load_File.resx">
       <DependentUpon>Load_File.h</DependentUpon>
