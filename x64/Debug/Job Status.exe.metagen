@@ -1,5 +1,7 @@
   JobStatus.Add_Job_Info.resources - Embedded, ContainedInManifestFile, 
+  JobStatus.Load_File.resources - Embedded, ContainedInManifestFile, 
   JobStatus.Main_Menu.resources - Embedded, ContainedInManifestFile, 
+  JobStatus.Save_File.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly Job Status, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey

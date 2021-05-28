@@ -153,8 +153,14 @@
     <EmbeddedResource Include="Add_Job_Info.resx">
       <DependentUpon>Add_Job_Info.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Load_File.resx">
+      <DependentUpon>Load_File.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main_Menu.resx">
       <DependentUpon>Main_Menu.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Save_File.resx">
+      <DependentUpon>Save_File.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
