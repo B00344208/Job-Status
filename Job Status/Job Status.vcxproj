@@ -124,14 +124,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Add_Job_Info.cpp" />
+    <ClCompile Include="Display_Job_Info.cpp" />
+    <ClCompile Include="Load_File.cpp" />
     <ClCompile Include="Main_Menu.cpp" />
+    <ClCompile Include="Save_File.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add_Job_Info.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Display_Job_Info.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Lists.h" />
+    <ClInclude Include="Load_File.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Main_Menu.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Save_File.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="stdafx.h" />

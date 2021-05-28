@@ -1,5 +1,8 @@
 #pragma once
 #include "Add_Job_Info.h"
+#include "Display_Job_Info.h"
+#include "Save_File.h"
+#include "Load_File.h"
 
 namespace JobStatus {
 
@@ -75,10 +78,10 @@ namespace JobStatus {
 			this->BackGround->BackColor = System::Drawing::Color::Firebrick;
 			this->BackGround->Cursor = System::Windows::Forms::Cursors::No;
 			this->BackGround->Enabled = false;
-			this->BackGround->Location = System::Drawing::Point(0, 0);
+			this->BackGround->Location = System::Drawing::Point(0, -1);
 			this->BackGround->Multiline = true;
 			this->BackGround->Name = L"BackGround";
-			this->BackGround->Size = System::Drawing::Size(1349, 731);
+			this->BackGround->Size = System::Drawing::Size(1347, 630);
 			this->BackGround->TabIndex = 0;
 			// 
 			// Title
@@ -101,7 +104,7 @@ namespace JobStatus {
 			this->textBox1->Enabled = false;
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Times New Roman", 9.75F, System::Drawing::FontStyle::Italic, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(12, 697);
+			this->textBox1->Location = System::Drawing::Point(12, 595);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(240, 22);
 			this->textBox1->TabIndex = 5;
@@ -170,7 +173,7 @@ namespace JobStatus {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1350, 729);
+			this->ClientSize = System::Drawing::Size(1347, 629);
 			this->Controls->Add(this->Exit_App);
 			this->Controls->Add(this->Load_File);
 			this->Controls->Add(this->Save_File);
@@ -198,17 +201,26 @@ namespace JobStatus {
 
 		private: System::Void Display_All_Jobs_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-
+			this->Hide();
+			JobStatus::Display_Job_Info displayJobForm;
+			displayJobForm.ShowDialog();
+			this->Show();
 		}
 
 		private: System::Void Save_File_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-
+			this->Hide();
+			JobStatus::Save_File saveForm;
+			saveForm.ShowDialog();
+			this->Show();
 		}
 
 		private: System::Void Load_File_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-
+			this->Hide();
+			JobStatus::Load_File loadForm;
+			loadForm.ShowDialog();
+			this->Show();
 		}
 
 		private: System::Void Exit_App_Click(System::Object^ sender, System::EventArgs^ e)

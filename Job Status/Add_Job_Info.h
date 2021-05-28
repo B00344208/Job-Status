@@ -195,6 +195,7 @@ namespace JobStatus {
 			newSO.serviceOrder_Status = serviceOrderStatus;
 			newSO.time_Stamp = timeStamp;
 			service_order_lists.service_Order_List.push_back(newSO);
+			this->Close();
 		}		
 	};	
 }
