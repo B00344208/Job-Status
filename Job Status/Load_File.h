@@ -34,6 +34,8 @@ namespace JobStatus {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::TextBox^ BackGround;
+	protected:
 
 	private:
 		/// <summary>
@@ -48,16 +50,30 @@ namespace JobStatus {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->BackGround = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
+			// 
+			// BackGround
+			// 
+			this->BackGround->BackColor = System::Drawing::Color::Firebrick;
+			this->BackGround->Cursor = System::Windows::Forms::Cursors::No;
+			this->BackGround->Enabled = false;
+			this->BackGround->Location = System::Drawing::Point(0, -1);
+			this->BackGround->Multiline = true;
+			this->BackGround->Name = L"BackGround";
+			this->BackGround->Size = System::Drawing::Size(1347, 630);
+			this->BackGround->TabIndex = 1;
 			// 
 			// Load_File
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1149, 552);
+			this->ClientSize = System::Drawing::Size(1347, 629);
+			this->Controls->Add(this->BackGround);
 			this->Name = L"Load_File";
 			this->Text = L"Load_File";
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion

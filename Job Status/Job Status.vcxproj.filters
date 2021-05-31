@@ -24,9 +24,6 @@
     <ClCompile Include="Display_Job_Info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Save_File.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Load_File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Display_Job_Info.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Save_File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Load_File.h">

@@ -127,7 +127,6 @@
     <ClCompile Include="Display_Job_Info.cpp" />
     <ClCompile Include="Load_File.cpp" />
     <ClCompile Include="Main_Menu.cpp" />
-    <ClCompile Include="Save_File.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add_Job_Info.h">
@@ -143,9 +142,6 @@
     <ClInclude Include="Main_Menu.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Save_File.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
@@ -154,14 +150,14 @@
       <DependentUpon>Add_Job_Info.h</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Display_Job_Info.resx">
+      <DependentUpon>Display_Job_Info.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Load_File.resx">
       <DependentUpon>Load_File.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main_Menu.resx">
       <DependentUpon>Main_Menu.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Save_File.resx">
-      <DependentUpon>Save_File.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

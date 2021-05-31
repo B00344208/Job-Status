@@ -1,8 +1,11 @@
 #pragma once
 #include "Add_Job_Info.h"
 #include "Display_Job_Info.h"
-#include "Save_File.h"
 #include "Load_File.h"
+#include "Lists.h"
+#include <string>
+#include <iostream>
+#include <fstream>
 
 namespace JobStatus {
 
@@ -12,6 +15,7 @@ namespace JobStatus {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace std;
 
 	/// <summary>
 	/// Summary for Main_Menu
@@ -209,10 +213,21 @@ namespace JobStatus {
 
 		private: System::Void Save_File_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			this->Hide();
-			JobStatus::Save_File saveForm;
-			saveForm.ShowDialog();
-			this->Show();
+			Lists so_lists;
+			service_Order SO;
+			Time t;
+			t.setTime();
+			marshal_context date;
+			String^ datestamp = (t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year -100));
+			string dateStamp = date.marshal_as<string>(datestamp);
+			string saveName = dateStamp;
+			fstream file;
+			file.open("../Service Order/"+saveName+".txt", ios::out);			
+			for each (SO in so_lists.service_Order_List)
+			{
+				file << SO.serviceOrder_Number << ":" << SO.time_Stamp << ":" << SO.serviceOrder_Status;
+			}
+			file.close();
 		}
 
 		private: System::Void Load_File_Click(System::Object^ sender, System::EventArgs^ e)

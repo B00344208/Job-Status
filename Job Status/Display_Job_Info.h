@@ -1,4 +1,8 @@
 #pragma once
+#include "Lists.h"
+#include <string>
+#include <iostream>
+#include <msclr\marshal_cppstd.h>
 
 namespace JobStatus {
 
@@ -8,6 +12,9 @@ namespace JobStatus {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Threading::Tasks;
+	using namespace std;
+	using namespace msclr::interop;
 
 	/// <summary>
 	/// Summary for Display_Job_Info
@@ -34,6 +41,16 @@ namespace JobStatus {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::TextBox^ BackGround;
+	private: System::Windows::Forms::CheckedListBox^ display_Box;
+
+	private:
+
+	private: System::Windows::Forms::Button^ Main_Menu;
+	private: System::Windows::Forms::Button^ Display_SO_List;
+
+
+	protected:
 
 	private:
 		/// <summary>
@@ -48,12 +65,92 @@ namespace JobStatus {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"Display_Job_Info";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->BackGround = (gcnew System::Windows::Forms::TextBox());
+			this->display_Box = (gcnew System::Windows::Forms::CheckedListBox());
+			this->Main_Menu = (gcnew System::Windows::Forms::Button());
+			this->Display_SO_List = (gcnew System::Windows::Forms::Button());
+			this->SuspendLayout();
+			// 
+			// BackGround
+			// 
+			this->BackGround->BackColor = System::Drawing::Color::Firebrick;
+			this->BackGround->Cursor = System::Windows::Forms::Cursors::No;
+			this->BackGround->Enabled = false;
+			this->BackGround->Location = System::Drawing::Point(0, -1);
+			this->BackGround->Multiline = true;
+			this->BackGround->Name = L"BackGround";
+			this->BackGround->Size = System::Drawing::Size(1347, 630);
+			this->BackGround->TabIndex = 1;
+			// 
+			// display_Box
+			// 
+			this->display_Box->CheckOnClick = true;
+			this->display_Box->FormattingEnabled = true;
+			this->display_Box->Location = System::Drawing::Point(436, 51);
+			this->display_Box->Name = L"display_Box";
+			this->display_Box->Size = System::Drawing::Size(631, 289);
+			this->display_Box->TabIndex = 3;
+			// 
+			// Main_Menu
+			// 
+			this->Main_Menu->Cursor = System::Windows::Forms::Cursors::Default;
+			this->Main_Menu->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Main_Menu->Location = System::Drawing::Point(1072, 482);
+			this->Main_Menu->Name = L"Main_Menu";
+			this->Main_Menu->Size = System::Drawing::Size(129, 74);
+			this->Main_Menu->TabIndex = 7;
+			this->Main_Menu->Text = L"Main Menu";
+			this->Main_Menu->UseVisualStyleBackColor = true;
+			this->Main_Menu->Click += gcnew System::EventHandler(this, &Display_Job_Info::Main_Menu_Click);
+			// 
+			// Display_SO_List
+			// 
+			this->Display_SO_List->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F));
+			this->Display_SO_List->Location = System::Drawing::Point(714, 482);
+			this->Display_SO_List->Name = L"Display_SO_List";
+			this->Display_SO_List->Size = System::Drawing::Size(175, 74);
+			this->Display_SO_List->TabIndex = 8;
+			this->Display_SO_List->Text = L"Display";
+			this->Display_SO_List->UseVisualStyleBackColor = true;
+			this->Display_SO_List->Click += gcnew System::EventHandler(this, &Display_Job_Info::Display_SO_List_Click);
+			// 
+			// Display_Job_Info
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(1347, 629);
+			this->Controls->Add(this->Display_SO_List);
+			this->Controls->Add(this->Main_Menu);
+			this->Controls->Add(this->display_Box);
+			this->Controls->Add(this->BackGround);
+			this->Name = L"Display_Job_Info";
+			this->Text = L"Display_Job_Info";
+			this->ResumeLayout(false);
+			this->PerformLayout();
+
 		}
 #pragma endregion
+		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+			this->Close();
+		}
+
+		private: System::Void Display_SO_List_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+			Lists so_lists;
+			service_Order SO;
+
+			display_Box->Items->Clear();
+			display_Box->BeginUpdate();
+			for each (service_Order SO in so_lists.service_Order_List)
+			{
+				String^ SO_Number = marshal_as<String^>(SO.serviceOrder_Number);
+				String^ SO_TimeStamp = marshal_as<String^>(SO.time_Stamp);
+				String^ SO_Status = marshal_as<String^>(SO.serviceOrder_Status);
+				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
+			}
+			display_Box->EndUpdate();
+		}
 	};
 }

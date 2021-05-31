@@ -1,7 +1,7 @@
   JobStatus.Add_Job_Info.resources - Embedded, ContainedInManifestFile, 
+  JobStatus.Display_Job_Info.resources - Embedded, ContainedInManifestFile, 
   JobStatus.Load_File.resources - Embedded, ContainedInManifestFile, 
   JobStatus.Main_Menu.resources - Embedded, ContainedInManifestFile, 
-  JobStatus.Save_File.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly Job Status, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey
@@ -21,9 +21,6 @@ Class JobStatus.Add_Job_Info: AutoLayout, AnsiClass, Class, Public, BeforeFieldI
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class JobStatus.Display_Job_Info: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
-  :System.Windows.Forms.Form
-    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-Class JobStatus.Save_File: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class JobStatus.Load_File: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit

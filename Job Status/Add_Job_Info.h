@@ -3,6 +3,7 @@
 #include "Time.h"
 #include <string>
 #include <iostream>
+#include <codecvt>
 #include <msclr\marshal_cppstd.h>
 
 namespace JobStatus {
@@ -15,6 +16,7 @@ namespace JobStatus {
 	using namespace System::Drawing;
 	using namespace System::Threading::Tasks;
 	using namespace std;
+	using namespace msclr::interop;
 
 	string serviceOrderNumber;
 	string serviceOrderStatus;
@@ -56,6 +58,7 @@ namespace JobStatus {
 	private: System::Windows::Forms::TextBox^ SO;
 
 	private: System::Windows::Forms::Button^ Add_Job;
+	private: System::Windows::Forms::Button^ Main_Menu;
 	public:
 
 	protected:
@@ -78,6 +81,7 @@ namespace JobStatus {
 			this->Service_Order_Number = (gcnew System::Windows::Forms::TextBox());
 			this->SO = (gcnew System::Windows::Forms::TextBox());
 			this->Add_Job = (gcnew System::Windows::Forms::Button());
+			this->Main_Menu = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// BackGround
@@ -94,16 +98,16 @@ namespace JobStatus {
 			// Job_Status
 			// 
 			this->Job_Status->Cursor = System::Windows::Forms::Cursors::Default;
+			this->Job_Status->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->Job_Status->FormattingEnabled = true;
 			this->Job_Status->Items->AddRange(gcnew cli::array< System::Object^  >(8) {
-				L"Complete, GD Done", L"Complete", L"Priority Order", L"Pending for Samsung",
-					L"Engineer Report", L"GD Done", L"Re-write Done", L"£24.99"
+				L"Complete, GD Done", L"Complete", L"Priority Order",
+					L"Pending for Samsung", L"Engineer Report", L"GD Done", L"Re-write Done", L"£24.99"
 			});
 			this->Job_Status->Location = System::Drawing::Point(335, 48);
 			this->Job_Status->Name = L"Job_Status";
 			this->Job_Status->Size = System::Drawing::Size(129, 21);
 			this->Job_Status->TabIndex = 2;
-			this->Job_Status->SelectedIndexChanged += gcnew System::EventHandler(this, &Add_Job_Info::Job_Status_SelectedIndexChanged);
 			// 
 			// Service_Order_Number
 			// 
@@ -115,7 +119,6 @@ namespace JobStatus {
 			this->Service_Order_Number->Size = System::Drawing::Size(100, 22);
 			this->Service_Order_Number->TabIndex = 3;
 			this->Service_Order_Number->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->Service_Order_Number->TextChanged += gcnew System::EventHandler(this, &Add_Job_Info::Service_Order_Number_TextChanged);
 			this->Service_Order_Number->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Add_Job_Info::Service_Order_Number_KeyPress);
 			// 
 			// SO
@@ -136,19 +139,33 @@ namespace JobStatus {
 			this->Add_Job->Cursor = System::Windows::Forms::Cursors::Default;
 			this->Add_Job->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Add_Job->Location = System::Drawing::Point(37, 92);
+			this->Add_Job->Location = System::Drawing::Point(37, 98);
 			this->Add_Job->Name = L"Add_Job";
-			this->Add_Job->Size = System::Drawing::Size(427, 74);
+			this->Add_Job->Size = System::Drawing::Size(257, 74);
 			this->Add_Job->TabIndex = 5;
 			this->Add_Job->Text = L"Add Job";
 			this->Add_Job->UseVisualStyleBackColor = true;
 			this->Add_Job->Click += gcnew System::EventHandler(this, &Add_Job_Info::Add_Job_Click);
+			// 
+			// Main_Menu
+			// 
+			this->Main_Menu->Cursor = System::Windows::Forms::Cursors::Default;
+			this->Main_Menu->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Main_Menu->Location = System::Drawing::Point(335, 98);
+			this->Main_Menu->Name = L"Main_Menu";
+			this->Main_Menu->Size = System::Drawing::Size(129, 74);
+			this->Main_Menu->TabIndex = 6;
+			this->Main_Menu->Text = L"Main Menu";
+			this->Main_Menu->UseVisualStyleBackColor = true;
+			this->Main_Menu->Click += gcnew System::EventHandler(this, &Add_Job_Info::Main_Menu_Click);
 			// 
 			// Add_Job_Info
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(507, 201);
+			this->Controls->Add(this->Main_Menu);
 			this->Controls->Add(this->Add_Job);
 			this->Controls->Add(this->SO);
 			this->Controls->Add(this->Service_Order_Number);
@@ -167,35 +184,39 @@ namespace JobStatus {
 			e->Handled = true;
 		}
 
-		private: System::Void Service_Order_Number_TextChanged(System::Object^ sender, System::EventArgs^ e)
-		{
-			msclr::interop::marshal_context context;
-			String^ service_order_number = Service_Order_Number->Text;
-			serviceOrderNumber = context.marshal_as<string>(service_order_number);
-		}
-
-		private: System::Void Job_Status_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
-		{
-			msclr::interop::marshal_context context;
-			String^ service_order_status = Job_Status->Text;
-			serviceOrderStatus = context.marshal_as<string>(service_order_status);
-		}
-
 		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e)
 		{
 			Lists service_order_lists;
+			//Gets SO number from the text box
+			marshal_context number;
+			String^ service_order_number = Service_Order_Number->Text;
+			serviceOrderNumber = number.marshal_as<string>(service_order_number);
+
+			//Gets SO status from the select box
+			marshal_context status;
+			String^ service_order_status = Job_Status->Text;
+			serviceOrderStatus = status.marshal_as<string>(service_order_status);
+
+			//Gets time from the system
 			Time t;
 			t.setTime();
-			msclr::interop::marshal_context context;
+			marshal_context time;
 			String^ timestamp = (t.timeinfo.tm_hour + ":" + t.timeinfo.tm_min);
-			timeStamp = context.marshal_as<string>(timestamp);
-
-			service_Order newSO;
-			newSO.serviceOrder_Number = serviceOrderNumber;
-			newSO.serviceOrder_Status = serviceOrderStatus;
-			newSO.time_Stamp = timeStamp;
-			service_order_lists.service_Order_List.push_back(newSO);
+			timeStamp = time.marshal_as<string>(timestamp);
+			
+			//Saves all of the above in a List
+			service_Order* newSO = new service_Order();
+			newSO->serviceOrder_Number = serviceOrderNumber;
+			newSO->serviceOrder_Status = serviceOrderStatus;
+			newSO->time_Stamp = timeStamp;
+			service_order_lists.service_Order_List.push_back(*newSO);
+			
 			this->Close();
 		}		
-	};	
+
+		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+			this->Close();
+		}
+	};
 }
