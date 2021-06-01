@@ -3,8 +3,6 @@
 #include "Time.h"
 #include <string>
 #include <iostream>
-#include <codecvt>
-#include <msclr\marshal_cppstd.h>
 
 namespace JobStatus {
 
@@ -16,7 +14,7 @@ namespace JobStatus {
 	using namespace System::Drawing;
 	using namespace System::Threading::Tasks;
 	using namespace std;
-	using namespace msclr::interop;
+	using namespace System::Runtime::InteropServices;
 
 	string serviceOrderNumber;
 	string serviceOrderStatus;
@@ -188,28 +186,25 @@ namespace JobStatus {
 		{
 			Lists service_order_lists;
 			//Gets SO number from the text box
-			marshal_context number;
 			String^ service_order_number = Service_Order_Number->Text;
-			serviceOrderNumber = number.marshal_as<string>(service_order_number);
+			ClrStringToStdString(serviceOrderNumber, service_order_number);
 
 			//Gets SO status from the select box
-			marshal_context status;
 			String^ service_order_status = Job_Status->Text;
-			serviceOrderStatus = status.marshal_as<string>(service_order_status);
+			ClrStringToStdString(serviceOrderStatus, service_order_status);
 
 			//Gets time from the system
 			Time t;
 			t.setTime();
-			marshal_context time;
 			String^ timestamp = (t.timeinfo.tm_hour + ":" + t.timeinfo.tm_min);
-			timeStamp = time.marshal_as<string>(timestamp);
-			
+			ClrStringToStdString(timeStamp, timestamp);
+
 			//Saves all of the above in a List
-			service_Order* newSO = new service_Order();
-			newSO->serviceOrder_Number = serviceOrderNumber;
-			newSO->serviceOrder_Status = serviceOrderStatus;
-			newSO->time_Stamp = timeStamp;
-			service_order_lists.service_Order_List.push_back(*newSO);
+			service_Order newSO;
+			newSO.SetserviceOrder_Number(serviceOrderNumber);
+			newSO.SetserviceOrder_Status(serviceOrderStatus);
+			newSO.Settime_Stamp(timeStamp);
+			service_order_lists.service_Order_List.push_back(newSO);
 			
 			this->Close();
 		}		
@@ -218,5 +213,14 @@ namespace JobStatus {
 		{
 			this->Close();
 		}
+
+		static void ClrStringToStdString(string& outStr, String^ str)
+		{
+			IntPtr ansiStr = Marshal::StringToHGlobalAnsi(str);
+			outStr = (const char*)ansiStr.ToPointer();
+			Marshal::FreeHGlobal(ansiStr);
+		}
 	};
+
+	
 }

@@ -2,7 +2,6 @@
 #include "Lists.h"
 #include <string>
 #include <iostream>
-#include <msclr\marshal_cppstd.h>
 
 namespace JobStatus {
 
@@ -14,7 +13,6 @@ namespace JobStatus {
 	using namespace System::Drawing;
 	using namespace System::Threading::Tasks;
 	using namespace std;
-	using namespace msclr::interop;
 
 	/// <summary>
 	/// Summary for Display_Job_Info
@@ -140,14 +138,30 @@ namespace JobStatus {
 		{
 			Lists so_lists;
 			service_Order SO;
-
 			display_Box->Items->Clear();
 			display_Box->BeginUpdate();
-			for each (service_Order SO in so_lists.service_Order_List)
+
+			for (auto const& i : so_lists.service_Order_List)
 			{
-				String^ SO_Number = marshal_as<String^>(SO.serviceOrder_Number);
-				String^ SO_TimeStamp = marshal_as<String^>(SO.time_Stamp);
-				String^ SO_Status = marshal_as<String^>(SO.serviceOrder_Status);
+				String^ SO_Number = gcnew String(SO.GetserviceOrder_Number().c_str());
+				String^ SO_TimeStamp = gcnew String(SO.Gettime_Stamp().c_str());
+				String^ SO_Status = gcnew String(SO.GetserviceOrder_Status().c_str());
+				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
+			}
+
+			for each (SO in so_lists.service_Order_List)
+			{
+				String^ SO_Number = gcnew String(SO.GetserviceOrder_Number().c_str());
+				String^ SO_TimeStamp = gcnew String(SO.Gettime_Stamp().c_str());
+				String^ SO_Status = gcnew String(SO.GetserviceOrder_Status().c_str());
+				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
+			}
+			
+			for (vector<service_Order>::iterator it = so_lists.service_Order_List.begin(); it != so_lists.service_Order_List.end(); ++it)
+			{
+				String^ SO_Number = gcnew String(it->GetserviceOrder_Number().c_str());
+				String^ SO_TimeStamp = gcnew String(it->Gettime_Stamp().c_str());
+				String^ SO_Status = gcnew String(it->GetserviceOrder_Status().c_str());
 				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
 			}
 			display_Box->EndUpdate();

@@ -217,15 +217,22 @@ namespace JobStatus {
 			service_Order SO;
 			Time t;
 			t.setTime();
-			marshal_context date;
-			String^ datestamp = (t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year -100));
-			string dateStamp = date.marshal_as<string>(datestamp);
+			String^ datestamp = (t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
+			string dateStamp;			
+			ClrStringToStdString(dateStamp, datestamp);
 			string saveName = dateStamp;
 			fstream file;
-			file.open("../Service Order/"+saveName+".txt", ios::out);			
+			file.open("../Service Order/"+saveName+".txt", ios::out);
+			file << SO.GetserviceOrder_Number() << ":" << SO.Gettime_Stamp() << ":" << SO.GetserviceOrder_Status();
+
+			for (vector<service_Order>::iterator it = so_lists.service_Order_List.begin(); it != so_lists.service_Order_List.end(); ++it)
+			{
+				file << SO.GetserviceOrder_Number() << ":" << SO.Gettime_Stamp() << ":" << SO.GetserviceOrder_Status();
+			}
+
 			for each (SO in so_lists.service_Order_List)
 			{
-				file << SO.serviceOrder_Number << ":" << SO.time_Stamp << ":" << SO.serviceOrder_Status;
+				file << SO.GetserviceOrder_Number() << ":" << SO.Gettime_Stamp() << ":" << SO.GetserviceOrder_Status();
 			}
 			file.close();
 		}
@@ -243,5 +250,11 @@ namespace JobStatus {
 			this->Close();
 		}
 
+		static void ClrStringToStdString(string& outStr, String^ str)
+		{
+			IntPtr ansiStr = Marshal::StringToHGlobalAnsi(str);
+			outStr = (const char*)ansiStr.ToPointer();
+			Marshal::FreeHGlobal(ansiStr);
+		}
 	};
 }
