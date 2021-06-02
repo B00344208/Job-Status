@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <list>
 #include <string>
 #include <iostream>
 
@@ -51,6 +51,6 @@ namespace JobStatus
     class Lists
     {
     public:
-        vector<service_Order> service_Order_List;
+        list<service_Order> service_Order_List;
     };
 }

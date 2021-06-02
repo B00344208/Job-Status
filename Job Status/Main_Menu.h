@@ -213,26 +213,22 @@ namespace JobStatus {
 
 		private: System::Void Save_File_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			Lists so_lists;
-			service_Order SO;
 			Time t;
 			t.setTime();
 			String^ datestamp = (t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
 			string dateStamp;			
 			ClrStringToStdString(dateStamp, datestamp);
 			string saveName = dateStamp;
+			string soNumber = newSO.GetserviceOrder_Number();
+			string tmStamp = newSO.Gettime_Stamp();
+			string soStatus = newSO.GetserviceOrder_Status();
+
 			fstream file;
-			file.open("../Service Order/"+saveName+".txt", ios::out);
-			file << SO.GetserviceOrder_Number() << ":" << SO.Gettime_Stamp() << ":" << SO.GetserviceOrder_Status();
+			file.open("../Service Order/" + saveName + ".txt", ios::out);
 
-			for (vector<service_Order>::iterator it = so_lists.service_Order_List.begin(); it != so_lists.service_Order_List.end(); ++it)
+			for each (newSO in service_order_lists.service_Order_List)
 			{
-				file << SO.GetserviceOrder_Number() << ":" << SO.Gettime_Stamp() << ":" << SO.GetserviceOrder_Status();
-			}
-
-			for each (SO in so_lists.service_Order_List)
-			{
-				file << SO.GetserviceOrder_Number() << ":" << SO.Gettime_Stamp() << ":" << SO.GetserviceOrder_Status();
+				file << soNumber << ":" << tmStamp << ":" << soStatus;
 			}
 			file.close();
 		}

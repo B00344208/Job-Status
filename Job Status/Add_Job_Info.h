@@ -1,6 +1,7 @@
 #pragma once
 #include "Lists.h"
 #include "Time.h"
+#include <msclr\marshal_cppstd.h>
 #include <string>
 #include <iostream>
 
@@ -15,10 +16,13 @@ namespace JobStatus {
 	using namespace System::Threading::Tasks;
 	using namespace std;
 	using namespace System::Runtime::InteropServices;
+	using namespace msclr::interop;
 
 	string serviceOrderNumber;
 	string serviceOrderStatus;
 	string timeStamp;
+	static Lists service_order_lists;
+	static service_Order newSO;
 
 	/// <summary>
 	/// Summary for Add_Job_Info
@@ -57,6 +61,7 @@ namespace JobStatus {
 
 	private: System::Windows::Forms::Button^ Add_Job;
 	private: System::Windows::Forms::Button^ Main_Menu;
+
 	public:
 
 	protected:
@@ -183,29 +188,30 @@ namespace JobStatus {
 		}
 
 		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e)
-		{
-			Lists service_order_lists;
+		{			
 			//Gets SO number from the text box
 			String^ service_order_number = Service_Order_Number->Text;
-			ClrStringToStdString(serviceOrderNumber, service_order_number);
+			//ClrStringToStdString(serviceOrderNumber, service_order_number);
+			string serviceOrderNumber = marshal_as<string>(service_order_number);
 
 			//Gets SO status from the select box
 			String^ service_order_status = Job_Status->Text;
-			ClrStringToStdString(serviceOrderStatus, service_order_status);
+			//ClrStringToStdString(serviceOrderStatus, service_order_status);
+			string serviceOrderStatus = marshal_as<string>(service_order_status);
 
 			//Gets time from the system
 			Time t;
 			t.setTime();
 			String^ timestamp = (t.timeinfo.tm_hour + ":" + t.timeinfo.tm_min);
-			ClrStringToStdString(timeStamp, timestamp);
+			//ClrStringToStdString(timeStamp, timestamp);
+			string timeStamp = marshal_as<string>(timestamp);
 
 			//Saves all of the above in a List
-			service_Order newSO;
 			newSO.SetserviceOrder_Number(serviceOrderNumber);
 			newSO.SetserviceOrder_Status(serviceOrderStatus);
 			newSO.Settime_Stamp(timeStamp);
-			service_order_lists.service_Order_List.push_back(newSO);
-			
+			service_order_lists.service_Order_List.emplace_back(newSO);
+
 			this->Close();
 		}		
 

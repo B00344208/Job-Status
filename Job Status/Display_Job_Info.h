@@ -136,32 +136,13 @@ namespace JobStatus {
 
 		private: System::Void Display_SO_List_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			Lists so_lists;
-			service_Order SO;
 			display_Box->Items->Clear();
 			display_Box->BeginUpdate();
-
-			for (auto const& i : so_lists.service_Order_List)
+			for each (newSO in service_order_lists.service_Order_List)
 			{
-				String^ SO_Number = gcnew String(SO.GetserviceOrder_Number().c_str());
-				String^ SO_TimeStamp = gcnew String(SO.Gettime_Stamp().c_str());
-				String^ SO_Status = gcnew String(SO.GetserviceOrder_Status().c_str());
-				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
-			}
-
-			for each (SO in so_lists.service_Order_List)
-			{
-				String^ SO_Number = gcnew String(SO.GetserviceOrder_Number().c_str());
-				String^ SO_TimeStamp = gcnew String(SO.Gettime_Stamp().c_str());
-				String^ SO_Status = gcnew String(SO.GetserviceOrder_Status().c_str());
-				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
-			}
-			
-			for (vector<service_Order>::iterator it = so_lists.service_Order_List.begin(); it != so_lists.service_Order_List.end(); ++it)
-			{
-				String^ SO_Number = gcnew String(it->GetserviceOrder_Number().c_str());
-				String^ SO_TimeStamp = gcnew String(it->Gettime_Stamp().c_str());
-				String^ SO_Status = gcnew String(it->GetserviceOrder_Status().c_str());
+				String^ SO_Number = gcnew String(newSO.GetserviceOrder_Number().c_str());
+				String^ SO_TimeStamp = gcnew String(newSO.Gettime_Stamp().c_str());
+				String^ SO_Status = gcnew String(newSO.GetserviceOrder_Status().c_str());
 				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
 			}
 			display_Box->EndUpdate();
