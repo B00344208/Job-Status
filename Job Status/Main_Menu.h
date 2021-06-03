@@ -247,9 +247,16 @@ namespace JobStatus {
 			fstream file;
 			file.open("../Service Order/" + saveName + ".txt", ios::out);
 
+			
+			int i = service_order_lists.service_Order_List.size();
 			for each (newSO in service_order_lists.service_Order_List)
-			{
+			{				
+				if (i > service_order_lists.service_Order_List.size())
+				{
+					file << "|";
+				}
 				file << newSO.GetserviceOrder_Number() << ":" << newSO.Gettime_Stamp() << ":" << newSO.GetserviceOrder_Status();
+				i++;
 			}
 
 			file.close();

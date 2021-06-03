@@ -213,9 +213,9 @@ namespace JobStatus {
 			}			
 
 			//Saves all of the above in a List
+			newSO.Settime_Stamp(timeStamp);
 			newSO.SetserviceOrder_Number(serviceOrderNumber);
 			newSO.SetserviceOrder_Status(serviceOrderStatus);
-			newSO.Settime_Stamp(timeStamp);
 			service_order_lists.service_Order_List.push_back(newSO);
 
 			this->Close();
