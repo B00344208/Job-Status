@@ -9,7 +9,7 @@ namespace JobStatus
     using namespace System::Text;
     using namespace std;
 
-    class service_Order
+    static class service_Order
     {
     private:
         string serviceOrder_Number;
@@ -17,13 +17,14 @@ namespace JobStatus
         string time_Stamp;
 
     public:
+
         string GetserviceOrder_Number()
         {
             return serviceOrder_Number;
         }
         string SetserviceOrder_Number(string serviceOrderNumber)
         {
-            serviceOrderNumber = serviceOrder_Number;
+            serviceOrder_Number = serviceOrderNumber;
             return serviceOrderNumber;
         }
 
@@ -33,7 +34,7 @@ namespace JobStatus
         }
         string SetserviceOrder_Status(string serviceOrderStatus)
         {
-            serviceOrderStatus = serviceOrder_Status;
+            serviceOrder_Status = serviceOrderStatus;
             return serviceOrderStatus;
         }
 
@@ -43,9 +44,12 @@ namespace JobStatus
         }
         string Settime_Stamp(string timeStamp)
         {
-            timeStamp = time_Stamp;
+            time_Stamp = timeStamp;
             return timeStamp;
         }
+
+        
+
     };
 
     class Lists

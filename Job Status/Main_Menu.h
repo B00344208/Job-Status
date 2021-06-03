@@ -215,21 +215,43 @@ namespace JobStatus {
 		{
 			Time t;
 			t.setTime();
-			String^ datestamp = (t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
-			string dateStamp;			
+			String^ datestamp;
+			string dateStamp;
+
+			if ((t.timeinfo.tm_mon + 1) > 9)
+			{
+				if (t.timeinfo.tm_mday < 10)
+				{
+					datestamp = ("0" + t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
+				}
+				else
+				{
+					datestamp = (t.timeinfo.tm_mday + "." + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
+				}
+			}
+			else
+			{
+				if (t.timeinfo.tm_mday < 10)
+				{
+					datestamp = ("0" + t.timeinfo.tm_mday + ".0" + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
+				}
+				else
+				{
+					datestamp = (t.timeinfo.tm_mday + ".0" + (t.timeinfo.tm_mon + 1) + "." + (t.timeinfo.tm_year + 1900));
+				}		
+			}
+
 			ClrStringToStdString(dateStamp, datestamp);
 			string saveName = dateStamp;
-			string soNumber = newSO.GetserviceOrder_Number();
-			string tmStamp = newSO.Gettime_Stamp();
-			string soStatus = newSO.GetserviceOrder_Status();
 
 			fstream file;
 			file.open("../Service Order/" + saveName + ".txt", ios::out);
 
 			for each (newSO in service_order_lists.service_Order_List)
 			{
-				file << soNumber << ":" << tmStamp << ":" << soStatus;
+				file << newSO.GetserviceOrder_Number() << ":" << newSO.Gettime_Stamp() << ":" << newSO.GetserviceOrder_Status();
 			}
+
 			file.close();
 		}
 
