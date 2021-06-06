@@ -1,3 +1,5 @@
+//This program was written by Kamil Jusis (B00344208)
+
 #pragma once
 #include "Main_Menu.h"
 #include "Add_Job_Info.h"

@@ -1,3 +1,5 @@
+//This program was written by Kamil Jusis (B00344208)
+
 #pragma once
 #include "Add_Job_Info.h"
 #include "Display_Job_Info.h"
@@ -195,30 +197,30 @@ namespace JobStatus {
 
 #pragma endregion
 
-		private: System::Void Add_Job_Information_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Add_Job_Information_Click(System::Object^ sender, System::EventArgs^ e) //Opens Add_Job_Info form
 		{
-			this->Hide();
+			this->Hide(); //Hides main form
 			JobStatus::Add_Job_Info addJobForm;
-			addJobForm.ShowDialog();
+			addJobForm.ShowDialog(); //Opens selected form
 			this->Show();
 		}
 
-		private: System::Void Display_All_Jobs_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Display_All_Jobs_Click(System::Object^ sender, System::EventArgs^ e) //Opens Display_Job_Info form
 		{
-			this->Hide();
+			this->Hide(); //Hides main form
 			JobStatus::Display_Job_Info displayJobForm;
-			displayJobForm.ShowDialog();
+			displayJobForm.ShowDialog(); //Opens selected form
 			this->Show();
 		}
 
-		private: System::Void Save_File_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Save_File_Click(System::Object^ sender, System::EventArgs^ e) //Saves list in a text file
 		{
 			Time t;
-			t.setTime();
+			t.setTime(); //Gets current date from the system
 			String^ datestamp;
 			string dateStamp;
 
-			if ((t.timeinfo.tm_mon + 1) > 9)
+			if ((t.timeinfo.tm_mon + 1) > 9) //This section just takes care of date to be displayed always in this manner dd.mm.yyyy
 			{
 				if (t.timeinfo.tm_mday < 10)
 				{
@@ -241,41 +243,41 @@ namespace JobStatus {
 				}		
 			}
 
-			ClrStringToStdString(dateStamp, datestamp);
+			ClrStringToStdString(dateStamp, datestamp); //Converts system string datestamp to standard string dateStamp because fstream doesn't accept system strings
 			string saveName = dateStamp;
 
 			fstream file;
-			file.open("../Service Order/" + saveName + ".txt", ios::out);
+			file.open("../Service Order/" + saveName + ".txt", ios::out); //Opens file to save into it
 
 			
 			int i = service_order_lists.service_Order_List.size();
-			for each (newSO in service_order_lists.service_Order_List)
+			for each (newSO in service_order_lists.service_Order_List) //Loop to go through the whole list and save all files in the text file
 			{				
-				if (i > service_order_lists.service_Order_List.size())
+				if (i > service_order_lists.service_Order_List.size()) //Splits each item with |
 				{
 					file << "|";
 				}
-				file << newSO.GetserviceOrder_Number() << ":" << newSO.Gettime_Stamp() << ":" << newSO.GetserviceOrder_Status();
+				file << newSO.GetserviceOrder_Number() << ";" << newSO.Gettime_Stamp() << ";" << newSO.GetserviceOrder_Status(); //Splits every variable inside of the item with ;
 				i++;
 			}
 
-			file.close();
+			file.close(); //Closes file
 		}
 
-		private: System::Void Load_File_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Load_File_Click(System::Object^ sender, System::EventArgs^ e) //Opens Load_File form
 		{
-			this->Hide();
+			this->Hide(); //Hides main form
 			JobStatus::Load_File loadForm;
-			loadForm.ShowDialog();
+			loadForm.ShowDialog(); //Opens selected form
 			this->Show();
 		}
 
-		private: System::Void Exit_App_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Exit_App_Click(System::Object^ sender, System::EventArgs^ e) //Exits the application
 		{
-			this->Close();
+			this->Close(); //Closes Main form
 		}
 
-		static void ClrStringToStdString(string& outStr, String^ str)
+		static void ClrStringToStdString(string& outStr, String^ str) //Converts Windows managed Strings to std unmanaged strings
 		{
 			IntPtr ansiStr = Marshal::StringToHGlobalAnsi(str);
 			outStr = (const char*)ansiStr.ToPointer();

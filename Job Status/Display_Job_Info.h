@@ -1,3 +1,5 @@
+//This program was written by Kamil Jusis (B00344208)
+
 #pragma once
 #include "Lists.h"
 #include <string>
@@ -190,44 +192,65 @@ namespace JobStatus {
 
 		}
 #pragma endregion
-		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e) //Goes back to Main Menu
 		{
-			this->Close();
+			this->Close(); //Closes current form
 		}
 
-		private: System::Void Display_SO_List_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Display_SO_List_Click(System::Object^ sender, System::EventArgs^ e) //Displays List in the Display box
 		{
-			display_Box->Items->Clear();
-			display_Box->BeginUpdate();
-			for each (newSO in service_order_lists.service_Order_List)
+			display_Box->Items->Clear(); //Clears the display box
+			display_Box->BeginUpdate(); //Stops rendering items in the display box to speed up addition of items to itself
+			for each (newSO in service_order_lists.service_Order_List) //Displays full list
 			{
 				String^ SO_Number = gcnew String(newSO.GetserviceOrder_Number().c_str());
 				String^ SO_TimeStamp = gcnew String(newSO.Gettime_Stamp().c_str());
 				String^ SO_Status = gcnew String(newSO.GetserviceOrder_Status().c_str());
 				display_Box->Items->Add("SO: " + SO_Number + "	Time Stamp: " + SO_TimeStamp + "	Status: " + SO_Status);
 			}
-			display_Box->EndUpdate();
+			display_Box->EndUpdate(); //Turns rendering of items inside of the box back on
 		}
 
-		private: System::Void Sort_By_Date_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Sort_By_Date_Click(System::Object^ sender, System::EventArgs^ e) //Sorts list by time using timeStamp
+			//Here I tried to implement sorting using the date stamp inside of the items
+			//Unfortunately I couldn't figure out how to do it
 		{
-			sort(service_order_lists.service_Order_List.begin(), service_order_lists.service_Order_List.end(), newSO.Gettime_Stamp());
-		}
+			//sort(service_order_lists.service_Order_List.begin(), service_order_lists.service_Order_List.end(), newSO.Gettime_Stamp());
+			//for (list<service_Order>::iterator it = service_order_lists.service_Order_List.begin(); it != service_order_lists.service_Order_List.end(); ++it)
+			/*for (int i = 0; i < 10; i++)
+			{
+				int smallest = service_order_lists.service_Order_List[i];
+				int smallestIndex = i;
 
-		private: System::Void Update_SO_Status_Click(System::Object^ sender, System::EventArgs^ e)
-		{
-			String^ Si = display_Box->Text;
-			string si;
-			ClrStringToStdString(si, Si);
-
-
-			for (list<service_Order>::iterator it = service_order_lists.service_Order_List.begin(); it != service_order_lists.service_Order_List.end(); ++it)
-			{	
-				if (it->GetserviceOrder_Number() == si)
+				for (int m = 1; m < 10; m++)
 				{
-					service_order_lists.service_Order_List.erase(it);
+					if (service_order_lists.service_Order_List[m] < smallest)
+					{
+						smallest = arr[m];
+						smallestIndex = m;
+					}
 				}
+
+				swap(service_order_lists.service_Order_List[i], service_order_lists.service_Order_List[smallestIndex]);
+			}*/
+		}
+
+		private: System::Void Update_SO_Status_Click(System::Object^ sender, System::EventArgs^ e) //Updates selected item in the list
+			//I tried doing update function however it was taking me very long
+			//time to figure it out and so I didn't have enough time to finish it
+		{
+			/*String^ Selection;
+
+			for (int i = 0; i < display_Box->CheckedItems->Count; i++)
+			{
+				Selection = display_Box->CheckedItems[i]->ToString();
+				service_order_lists.service_Order_List.(i);
 			}
+
+
+			string selection;
+			ClrStringToStdString(selection, Selection);
+			cout << selection;*/
 		}
 
 		static void ClrStringToStdString(string& outStr, String^ str) //Converts Windows managed Strings to std unmanaged strings

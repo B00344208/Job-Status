@@ -1,3 +1,5 @@
+//This program was written by Kamil Jusis (B00344208)
+
 #pragma once
 #include "Lists.h"
 #include <string>
@@ -147,108 +149,44 @@ this->PerformLayout();
 		{
 			if (!Char::IsControl(e->KeyChar) && !Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08 && e->KeyChar != '.')
 				e->Handled = true; //This is to ensure that numbers and full stops can be written in the textbox
-
-			//if (e->KeyChar == '.')
-				//e->Handled = true; //This is to ensure that full stops can be written in the textbox
 		}
 
-		private: System::Void Load_File_Date_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Load_File_Date_Click(System::Object^ sender, System::EventArgs^ e) //Loads file to the list
 		{
 			string dateStamp;
-			String^ datestamp = Job_Date->Text;
+			String^ datestamp = Job_Date->Text; //Takes input from the box to open correct file
 
 			ClrStringToStdString(dateStamp, datestamp);
 			string loadName = dateStamp;
 
-			//load the text file and put it into a single string:p
-			ifstream in("../Service Order/" + loadName + ".txt");
-			stringstream buffer;
-			buffer << in.rdbuf();
-			string test = buffer.str();
-			cout << test << endl << endl;
+			ifstream file("../Service Order/" + loadName + ".txt", ios::in); //Opens file to read from it
 
-			size_t pos;
-			size_t nextVar;
-			size_t nextObj;
-			size_t line;
+			string buffer;
 
-			string str[2];
-			int x = 1;
-
-			//int line;
-
-			if (line = test.find("|", pos))
+			while (getline(file, buffer, '|')) //reads the file line by line, splits each item whenever | is found
 			{
+				istringstream stringLine(buffer);
+				getline(stringLine, serviceOrderNumber, ';'); //splits variables whenever ; is found
+				getline(stringLine, timeStamp, ';');
+				getline(stringLine, serviceOrderStatus);
 
+				newSO.SetserviceOrder_Number(serviceOrderNumber);
+				newSO.Settime_Stamp(timeStamp);				
+				newSO.SetserviceOrder_Status(serviceOrderStatus);
+				service_order_lists.service_Order_List.push_back(newSO); //Pushes item to the back of the list
 			}
 
-			//for (line)
+			file.close(); //Closes file
 
-			while (!buffer.eof())
-			{
-				if (nextObj = test.find("|", pos))
-				{
-					service_order_lists.service_Order_List.push_back(newSO);
-				}
-				else
-				if (nextVar = test.find(":", pos))
-				{
-					switch (x)
-					{
-					case 1:
-						newSO.SetserviceOrder_Number(serviceOrderNumber) = test.substr(pos, (nextVar - pos));
-						x++;
-						break;
-					case 2:
-						newSO.SetserviceOrder_Status(serviceOrderStatus) = test.substr(pos, (nextVar - pos));
-						x++;
-						break;
-					case 3:
-						newSO.Settime_Stamp(timeStamp) = test.substr(pos, (nextVar - pos));
-						x = 1;
-						break;
-					default:
-						break;
-					}
-				}
-			}	
-
-			/*for (x = 0; x <= 1; x++) {
-				pos2 = (test.find(":", pos1) || test.find("|", pos1)); //search for the bar ":". pos2 will be where the bar was found.
-				str[x] = test.substr(pos1, (pos2 - pos1)); //make a substring, wich is nothing more than a copy of a fragment of the big string.
-
-				cout << str[x] << endl;
-				cout << "pos1 " << pos1 << ", pos2 " << pos2 << endl;
-				pos1 = pos2 + 1; // sets pos1 to the next character after pos2 so, it can start searching the next bar |.
-			}*/
-
-
-			/*file.open("../Service Order/" + loadName + ".txt", ios::in);
-
-			while (file)
-			{
-				for (int i = 0; SIZE > i; i++)
-				{
-					getline(file, check, ' ');
-					service_order_lists.service_Order_List = check;
-				}
-				file >> newSO.SetserviceOrder_Number(serviceOrderNumber);
-				file >> newSO.Settime_Stamp(timeStamp);
-				file >> newSO.SetserviceOrder_Status(serviceOrderStatus);
-				service_order_lists.service_Order_List.push_back(newSO);
-			}
-
-			file.close();*/
-
-			this->Close();
+			this->Close(); //Closes current form
 		}
 
-		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e) //Goes back to Main Menu
 		{
-			this->Close();
+			this->Close(); //Closes current form
 		}
 
-		static void ClrStringToStdString(string& outStr, String^ str)
+		static void ClrStringToStdString(string& outStr, String^ str) //Converts Windows managed Strings to std unmanaged strings
 		{
 			IntPtr ansiStr = Marshal::StringToHGlobalAnsi(str);
 			outStr = (const char*)ansiStr.ToPointer();

@@ -1,3 +1,5 @@
+//This program was written by Kamil Jusis (B00344208)
+
 #pragma once
 #include "Lists.h"
 #include "Time.h"
@@ -18,6 +20,7 @@ namespace JobStatus {
 	using namespace System::Runtime::InteropServices;
 	using namespace msclr::interop;
 
+	//Public global strings
 	string serviceOrderNumber;
 	string serviceOrderStatus;
 	string timeStamp;
@@ -188,20 +191,20 @@ namespace JobStatus {
 			e->Handled = true; //This is to ensure that only numbers can be written in the textbox
 		}
 
-		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e)
+		private: System::Void Add_Job_Click(System::Object^ sender, System::EventArgs^ e) //Adds new item to the list
 		{
 			//Gets SO number from the text box
-			String^ service_order_number = Service_Order_Number->Text;
+			String^ service_order_number = Service_Order_Number->Text; //Takes input from the box
 			ClrStringToStdString(serviceOrderNumber, service_order_number);
 
 			//Gets SO status from the select box
-			String^ service_order_status = Job_Status->Text;
+			String^ service_order_status = Job_Status->Text; //Takes input from the box
 			ClrStringToStdString(serviceOrderStatus, service_order_status);
 
 			//Gets time from the system
 			Time t;
 			t.setTime();
-			if (t.timeinfo.tm_min < 10)
+			if (t.timeinfo.tm_min < 10) //This section makes sure that time is always displayed as hh:mm
 			{
 				String^ timestamp = (t.timeinfo.tm_hour + ":0" + t.timeinfo.tm_min);
 				ClrStringToStdString(timeStamp, timestamp);
@@ -216,14 +219,14 @@ namespace JobStatus {
 			newSO.Settime_Stamp(timeStamp);
 			newSO.SetserviceOrder_Number(serviceOrderNumber);
 			newSO.SetserviceOrder_Status(serviceOrderStatus);
-			service_order_lists.service_Order_List.push_back(newSO);
+			service_order_lists.service_Order_List.push_back(newSO); //Pushes item to the back of the list
 
-			this->Close();
+			this->Close(); //Closes current form
 		}
 
 		private: System::Void Main_Menu_Click(System::Object^ sender, System::EventArgs^ e) //Returns to Main Menu
 		{
-			this->Close();
+			this->Close(); //Closes current form
 		}
 
 		static void ClrStringToStdString(string& outStr, String^ str) //Converts Windows managed Strings to std unmanaged strings

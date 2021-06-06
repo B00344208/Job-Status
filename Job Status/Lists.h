@@ -1,3 +1,5 @@
+//This program was written by Kamil Jusis (B00344208)
+
 #pragma once
 #include <list>
 #include <string>
@@ -47,9 +49,6 @@ namespace JobStatus
             time_Stamp = timeStamp;
             return timeStamp;
         }
-
-        
-
     };
 
     class Lists
